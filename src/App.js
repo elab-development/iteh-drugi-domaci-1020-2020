@@ -14,18 +14,22 @@ function App() {
     fetchData();
   }, []);
 
-  return(
+  return (
     <BrowserRouter>
-        <NavBar cartNum = {cartNum}/>
-        <Routes>
-            <Route path = "/"
-                element = {
-                <Books books = {books} onAdd = {addToCart} onRemove = {removeFromCart}/>
-                }
-            />
-        </Routes>      
+      <NavBar cartNum = {cartNum}/>
+      <Routes>
+        <Route path = "/"
+          element = {
+          <Books books = {books} onAdd = {addToCart} onRemove = {removeFromCart}/>
+          }
+          />
+        <Route path = "/cart"
+          element = {
+            <Cart cartBooks = {cartBooks} onAdd = {addToCart} onRemove = {removeFromCart} onPurchase = {purchase}/>
+          } />
+      </Routes>      
     </BrowserRouter>
-  )
+  );
   
 }
 
