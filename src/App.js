@@ -27,6 +27,11 @@ function App() {
           element = {
             <Cart cartBooks = {cartBooks} onAdd = {addToCart} onRemove = {removeFromCart} onPurchase = {purchase}/>
           } />
+        <Route path ="/contact"
+          element = {
+            <Contact contact />
+          }
+        />
       </Routes>      
     </BrowserRouter>
   );
