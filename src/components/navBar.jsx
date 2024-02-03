@@ -8,9 +8,10 @@ function NavBar({cartNum}){
             <Link to = "/"><h2>Book Catalogue</h2></Link>   
             <Link to = "/contact" style={{ marginLeft: 20 }}><h2>Contact</h2></Link>  
             <Link to = "/cart" className="cart-items">
-                <ImCart style={{ marginLeft: 10 }} />
+                <ImCart style={{ marginLeft: 10}} />
                 <div className="cart-num">{cartNum}</div>
-            </Link>          
+            </Link>
+            <Link to = "/register"><h2 style={{ marginLeft: 10}}>Register</h2></Link>            
         </div>
     )
 }
