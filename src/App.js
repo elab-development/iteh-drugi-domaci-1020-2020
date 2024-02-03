@@ -10,6 +10,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Contact from './components/contact';
 import Register from './components/register';
+import Login from './components/login';
+
 function App() {
 
   var viewed_book = null;
@@ -98,6 +100,11 @@ function App() {
         <Route path ="/register"
           element = {
             <Register register />
+          }
+        />
+        <Route path ="/login"
+          element = {
+            <Login login />
           }
         />
       </Routes>      

@@ -11,7 +11,8 @@ function NavBar({cartNum}){
                 <ImCart style={{ marginLeft: 10}} />
                 <div className="cart-num">{cartNum}</div>
             </Link>
-            <Link to = "/register"><h2 style={{ marginLeft: 10}}>Register</h2></Link>            
+            <Link to = "/register"><h2 style={{ marginLeft: 10}}>Register</h2></Link>
+            <Link to = "/login"><h2 style={{ marginLeft: 10}}>Login</h2></Link>            
         </div>
     )
 }
