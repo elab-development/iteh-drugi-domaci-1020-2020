@@ -2,68 +2,22 @@ import React, { useState } from "react";
 
 const Contact = () => {
 
-    const FORM_ENDPOINT = "https://public.herotofu.com/0c0250a0-b3a8-11ee-8f73-bb364f04d22a"
-
     const [submitted, setSubmitted] = useState(false);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e) => { 
+      e.preventDefault();  
   
-      e.preventDefault();
-  
-  
-      const inputs = e.target.elements;
-  
+      const inputs = e.target.elements; 
       const data = {};
   
   
-      for (let i = 0; i < inputs.length; i++) {
-  
-        if (inputs[i].name) {
-  
-          data[inputs[i].name] = inputs[i].value;
-  
+      for (let i = 0; i < inputs.length; i++) { 
+        if (inputs[i].name) { 
+          data[inputs[i].name] = inputs[i].value; 
         }
   
-      }
-  
-  
-      fetch(FORM_ENDPOINT, {
-  
-        method: 'POST',
-  
-        headers: {
-  
-          Accept: 'application/json',
-  
-          'Content-Type': 'application/json',
-  
-        },
-  
-        body: JSON.stringify(data),
-  
-      })
-  
-        .then((response) => {
-  
-          if (!response.ok) {
-  
-            throw new Error('Form response was not ok');
-  
-          }
-  
-  
-          setSubmitted(true);
-  
-        })
-  
-        .catch((err) => {
-  
-          // Submit the form manually
-  
-          e.target.submit();
-  
-        });
-  
+      } 
+      setSubmitted(true);
     };
   
   
@@ -79,10 +33,8 @@ const Contact = () => {
   
   
     return (  
-      <form 
-        action={FORM_ENDPOINT} 
-        onSubmit={handleSubmit} 
-        method="POST" 
+      <form
+        onSubmit={handleSubmit}
       >
   
         <div>
