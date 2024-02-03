@@ -19,10 +19,21 @@ const Login = () => {
       }, []);
 
     const handleSubmit = (e) => {  
-      e.preventDefault();
+      e.preventDefault(); 
       const email = e.target.email;
       const password = e.target.password;
-      console.log(email.value);   
+      console.log(email.value);
+
+
+      users.map((user) =>{        
+        if(user.email === email.value && user.password === password.value){
+            setSubmitted(true);
+        }
+        else{
+            alert("Unknown user")
+            setSubmitted(false);
+        }
+      })    
     };
   
   
