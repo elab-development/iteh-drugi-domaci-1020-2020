@@ -1,39 +1,51 @@
-import { useState } from 'react';
-export default function Register() {
+import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 
-// States for registration
-const [name, setName] = useState('');
-const [email, setEmail] = useState('');
-const [password, setPassword] = useState('');
+const Register = () => {
 
-// States for checking the errors
-const [submitted, setSubmitted] = useState(false);
-const [error, setError] = useState(false);
+    const [submitted, setSubmitted] = useState(false);
+    const navigate = useNavigate();
 
-return (
-<div className="form">
-<div>
-<h1>User Registration</h1>
-</div>
+    const handleSubmit = (e) => {  
+      e.preventDefault();
+      const inputs = e.target.elements;  
+      const data = {};
+  
+  
+      for (let i = 0; i < inputs.length; i++) {
+        if (inputs[i].name) { 
+          data[inputs[i].name] = inputs[i].value; 
+        } 
+      }
 
-<form>
-{/* Labels and inputs for form data */}
-<label className="label">Name</label>
-<input className="input"
-value={name} type="text" />
-
-<label className="label">Email</label>
-<input className="input"
-value={email} type="email" />
-
-<label className="label">Password</label>
-<input className="input"
-value={password} type="password" />
-
-<button className="btn" type="submit">
-Submit
-</button>
-</form>
-</div>
-);
-}
+      setSubmitted(true);
+    };
+  
+  
+    if (submitted) {  
+        alert("User has been successfully registered!");
+        navigate("..\\");
+    }
+  
+  
+    return (  
+      <form 
+        onSubmit={handleSubmit}
+      >
+  
+        <div>
+          <input type="text" placeholder="Your name" name="name" required />
+          <br></br>
+          <input type="email" placeholder="Email" name="email" required />
+          <br></br>
+          <input type="password" placeholder="Password" name="password" required />
+          <br></br>
+          <button type="submit"> Register </button> 
+        </div>
+      </form>
+  
+    );
+  
+  };
+  
+  export default Register;
