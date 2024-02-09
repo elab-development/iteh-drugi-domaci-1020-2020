@@ -93,16 +93,15 @@ function App() {
   const [books, setBooks] = useState(null);
   const [cartBooks, setCartBooks] = useState([]);
 
-  //Read data from json file
-  useEffect(()=>{
-    const fetchData = async () => {
-      const response = await axios.get('/bookData.json');
-      console.log(response.data.books);
+  //Get books from laravel
+  useEffect(() => {
+    const getBooks = async() => {
+      const response = await axios_instance.get('books');
       setBooks(response.data.books);
+      console.log(response.data);
     }
-
-    fetchData();
-  }, []);
+    getBooks();
+  }, [axios_instance])
 
 
   return (
