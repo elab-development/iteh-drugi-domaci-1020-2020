@@ -31,6 +31,16 @@ function App() {
     setToken(auth_token);
     setLoginState(true);
   }
+  
+  const logout = () => {
+      window.sessionStorage.setItem("auth_token", null);
+      window.sessionStorage.setItem("auth_name", "");
+      window.sessionStorage.setItem("auth_id", null);
+      window.sessionStorage.setItem("role_id",null);
+      setToken(undefined);
+      setLoginState(false);
+      window.location.assign('/');
+  }
 
   // Remove an item from cart
   const removeFromCart = (id) => {
@@ -118,11 +128,10 @@ function App() {
             <Register register />
           }
         />
-        <Route path ="/login"
+		<Route path ="/login"
           element = {
-            <Login login />
-          }
-        />
+            <Login login axios_instance = {axios_instance} addToken={addToken}/>
+          }/>
       </Routes>      
     </BrowserRouter>
   );
