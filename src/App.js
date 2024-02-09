@@ -41,6 +41,43 @@ function App() {
       setLoginState(false);
       window.location.assign('/');
   }
+  
+  // Adding, editing and deleting books from database
+  const edit = (title, author, genre_id, id) =>{
+    axios_instance.patch('books/'+id+'?title='+title+'&author='+author+'&genre_id='+genre_id, {}, {
+      headers: {
+        Authorization: `Bearer ${window.sessionStorage.getItem(
+          "auth_token"
+        )}`,
+      }
+    })
+  }
+
+  const destroy = (id) => {
+    books.map((book) => {
+      if (book.id === id) {
+        axios_instance.delete('books/'+id, {
+          headers: {
+            Authorization: `Bearer ${window.sessionStorage.getItem(
+              "auth_token"
+            )}`,
+          }
+        }).then(response => {console.log(response)})
+        refreshCat();
+      }
+    });
+
+  }
+
+  const add = (title, author, genre_id) =>{
+      axios_instance.post('books?title='+title+'&author='+author+'&genre_id='+genre_id, {}, {
+      headers: {
+        Authorization: `Bearer ${window.sessionStorage.getItem(
+          "auth_token"
+        )}`,
+      }
+    })
+  }  
 
   // Remove an item from cart
   const removeFromCart = (id) => {
