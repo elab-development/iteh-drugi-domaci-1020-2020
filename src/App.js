@@ -12,9 +12,20 @@ import Contact from './components/contact';
 import Register from './components/register';
 import Login from './components/login';
 
+const axios_instance = axios.create({
+  baseURL: 'http://127.0.0.1:8000/api/',
+  timeout: 10000,
+  headers: {'crossorigin':'anonymous'},
+  withCredentials: false
+});
+
 function App() {
 
   var viewed_book = null;
+  
+  const [token, setToken] = useState();
+  const [isLoggedIn, setLoginState] = useState(false);
+  const [ID, setID] = useState(0);
 
   // Remove an item from cart
   const removeFromCart = (id) => {
