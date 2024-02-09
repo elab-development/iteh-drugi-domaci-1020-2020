@@ -26,6 +26,11 @@ function App() {
   const [token, setToken] = useState();
   const [isLoggedIn, setLoginState] = useState(false);
   const [ID, setID] = useState(0);
+  
+  const addToken = (auth_token) => {
+    setToken(auth_token);
+    setLoginState(true);
+  }
 
   // Remove an item from cart
   const removeFromCart = (id) => {
