@@ -15,6 +15,13 @@ const Book = ({book, onAdd, onRemove}) => {
         setResponse(await r.json());
         console.log(book_response);
     }
+	
+	useEffect(() => {
+        fetch('https://picsum.photos/v2/list')
+            .then(response => response.json())
+            .then(data => setImages(data))
+            .catch(error => console.error("Error fetching data: ", error))
+    }, [])
 
     return(
         <div className='card'>
