@@ -11,6 +11,8 @@ import { Link } from "react-router-dom";
 import Contact from './components/contact';
 import Register from './components/register';
 import Login from './components/login';
+import Admin from './components/admin';
+import BookAdd from './components/bookAdd';
 
 const axios_instance = axios.create({
   baseURL: 'http://127.0.0.1:8000/api/',
@@ -21,17 +23,15 @@ const axios_instance = axios.create({
 
 function App() {
 
-  var viewed_book = null;
-  
   const [token, setToken] = useState();
   const [isLoggedIn, setLoginState] = useState(false);
   const [ID, setID] = useState(0);
-  
+
   const addToken = (auth_token) => {
     setToken(auth_token);
     setLoginState(true);
   }
-  
+
   const logout = () => {
       window.sessionStorage.setItem("auth_token", null);
       window.sessionStorage.setItem("auth_name", "");
@@ -41,7 +41,7 @@ function App() {
       setLoginState(false);
       window.location.assign('/');
   }
-  
+
   // Adding, editing and deleting books from database
   const edit = (title, author, genre_id, id) =>{
     axios_instance.patch('books/'+id+'?title='+title+'&author='+author+'&genre_id='+genre_id, {}, {
@@ -77,7 +77,8 @@ function App() {
         )}`,
       }
     })
-  }  
+  }
+
 
   // Remove an item from cart
   const removeFromCart = (id) => {
@@ -125,9 +126,14 @@ function App() {
     setCartBooks(newBooks);
   }
 
+  const refreshCat = () => {
+    const newBooks = books.filter((book) => book != null);
+    setBooks(newBooks);
+  }
+
   // Objects (books, number of cart items, books in cart...)
   const [cartNum, setCartNum] = useState(0);
-  const [books, setBooks] = useState(null);
+  const [books, setBooks] = useState([]);
   const [cartBooks, setCartBooks] = useState([]);
 
   //Get books from laravel
@@ -140,14 +146,14 @@ function App() {
     getBooks();
   }, [axios_instance])
 
-
+  
   return (
     <BrowserRouter>
-      <NavBar cartNum = {cartNum}/>
+      <NavBar cartNum = {cartNum} isLoggedIn={isLoggedIn} logout = {logout}/>
       <Routes>
         <Route path = "/"
           element = {
-          <Books books = {books} onAdd = {addToCart} onRemove = {removeFromCart}/>
+          <Books books = {books} onAdd = {addToCart} onRemove = {removeFromCart} isLoggedIn={isLoggedIn}/>
           }
           />
         <Route path = "/cart"
@@ -162,12 +168,26 @@ function App() {
         <Route path ="/register"
           element = {
             <Register register />
-          }
-        />
-		<Route path ="/login"
+          }/>
+        <Route path ="/login"
           element = {
             <Login login axios_instance = {axios_instance} addToken={addToken}/>
           }/>
+        <Route path = "/admin"
+          element = {
+          <Admin books = {books} setID={setID} onAdd = {edit} onRemove = {destroy} isLoggedIn={isLoggedIn}/>
+          }
+          />
+        <Route path = "admin/bookAdd"
+          element = {
+          <BookAdd handleSubmit={add} id={-1}/>
+          }
+          />
+        <Route path = "admin/bookEdit"
+          element = {
+          <BookAdd handleSubmit={edit} id={ID}/>
+          }
+          />
       </Routes>      
     </BrowserRouter>
   );
