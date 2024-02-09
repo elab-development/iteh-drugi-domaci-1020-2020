@@ -5,43 +5,54 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 
 
-const Book = ({book, onAdd, onRemove}) => {       
-    const ol = book.ol;
+const Book = ({book, onAdd, onRemove, isLoggedIn, randomNum}) => {   
 
-    const [book_response, setResponse] = useState([]);
-    useEffect(() => {url()}, []);
-    const url = async () => {
-        const r = await fetch("https://openlibrary.org/books/" + ol + ".json");
-        setResponse(await r.json());
-        console.log(book_response);
-    }
-	
-	useEffect(() => {
+    const [images, setImages] = useState(null);
+
+    useEffect(() => {
         fetch('https://picsum.photos/v2/list')
             .then(response => response.json())
             .then(data => setImages(data))
             .catch(error => console.error("Error fetching data: ", error))
     }, [])
-
-    return(
-        <div className='card'>
-            <img className='card-img-top' src = {book.book_img} alt = "Cover image" width = "200px" height = "300px"/>
-            <div className='card-body'>
-                <h3 className='card-title'>{book_response.title}</h3>
-                <br></br>
-                <p className='card-text'>Author: {book.author}</p>
-                <p className='card-text'>Publish Date: {book_response.publish_date}</p>
-                <div className='btn-div'>                      
-                    <button className="btn" onClick={() => onAdd(book.id)}>
-                        <ImPlus />
-                    </button>
-                    <button className="btn" onClick={() => onRemove(book.id)} >
-                        <ImMinus />
-                    </button>
-                </div>               
-            </div>
-        </div>
-    )
+    
+    if(images != null){
+        if (isLoggedIn === false){
+            return(
+                <div className='card'>
+                    <img className='card-img-top' src={images[randomNum].download_url} alt = "Cover image" width = "200px" height = "300px"/>
+                    <div className='card-body'>
+                        <h3 className='card-title'>{book.title}</h3>
+                        <br></br>
+                        <p className='card-text'>Author: {book.author}</p>
+                        <p className='card-text'>Genre: {book.genre.name}</p>
+                        <p className='card-text'>Publish Date: {book.publish_date}</p>           
+                    </div>
+                </div>
+            )
+        }
+        else{
+            return(
+                <div className='card'>
+                    <img className='card-img-top' src = "https://picsum.photos/200/300" alt = "Cover image" width = "200px" height = "300px"/>
+                    <div className='card-body'>
+                        <h3 className='card-title'>{book.title}</h3>
+                        <br></br>
+                        <p className='card-text'>Author: {book.author}</p>
+                        <p className='card-text'>Publish Date: {book.publish_date}</p>
+                        <div className='btn-div'>                      
+                            <button className="btn" onClick={() => onAdd(book.id)}>
+                                <ImPlus />
+                            </button>
+                            <button className="btn" onClick={() => onRemove(book.id)} >
+                                <ImMinus />
+                            </button>
+                        </div>               
+                    </div>
+                </div>
+            )
+        }   
+    }
 }
 
 export default Book;
